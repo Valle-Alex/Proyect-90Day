@@ -4,6 +4,8 @@
 <style>
 :root{color-scheme:dark;--bg:#0b111c;--panel:#151f2d;--panel2:#1c2a3a;--line:#2b3b4c;--text:#edf4fb;--muted:#a7b9ca;--accent:#58ddb2;--gold:#f3c979}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:15px system-ui,-apple-system,Segoe UI,sans-serif}header{padding:24px 18px 16px;background:linear-gradient(140deg,#172c37,#111725);border-bottom:1px solid var(--line)}.wrap{max-width:850px;margin:auto}h1{font-size:27px;margin:4px 0}h2{font-size:19px;margin:0 0 14px}h3{font-size:16px;margin:14px 0 8px}.muted,small{color:var(--muted)}.eyebrow{font-size:12px;letter-spacing:2px;color:var(--accent);font-weight:700}.nav{display:flex;overflow-x:auto;gap:7px;padding:12px 14px;position:sticky;top:0;background:#0b111cef;z-index:5;border-bottom:1px solid var(--line)}button,.nav button{cursor:pointer;border:1px solid var(--line);background:var(--panel2);color:var(--text);border-radius:12px;padding:11px 13px;font:inherit}button.primary,.nav button.active{background:var(--accent);color:#07271e;border-color:var(--accent);font-weight:700}.nav button{white-space:nowrap;font-size:13px}.page{display:none;padding:16px 14px 90px}.page.active{display:block}.card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:17px;margin:0 0 14px}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.metric{background:var(--panel2);border-radius:13px;padding:12px}.metric strong{display:block;font-size:23px;margin:5px 0}.metric span{font-size:11px;color:var(--muted)}label{display:block;font-size:13px;color:var(--muted);margin:12px 0 6px}input,select,textarea{width:100%;padding:12px;border-radius:11px;border:1px solid #425467;background:#0d1723;color:var(--text);font:inherit}textarea{min-height:74px;resize:vertical}.row{display:flex;align-items:center;justify-content:space-between;gap:10px}.row>button{flex-shrink:0}.pill{background:#22443c;color:#9ff4d4;border-radius:100px;padding:5px 10px;font-size:12px}.progress{height:9px;background:#334253;border-radius:10px;overflow:hidden;margin:12px 0}.progress>div{height:100%;background:var(--accent);width:0}.task{display:flex;align-items:center;gap:11px;border-bottom:1px solid var(--line);padding:11px 0}.task input{width:20px;height:20px;accent-color:var(--accent);flex-shrink:0}.task span{flex:1}.task small{display:block}.inline{display:flex;gap:9px;flex-wrap:wrap}.inline button{flex:1}.danger{color:#ffb2b2}.note{font-size:13px;line-height:1.6;color:var(--muted)}.chart{width:100%;height:170px;background:#101b29;border-radius:12px;padding:8px}svg{width:100%;height:100%}.meal{display:flex;align-items:center;gap:8px;padding:9px 0;border-bottom:1px solid var(--line)}.meal div{flex:1}.meal button{padding:7px 10px}.stack{display:grid;gap:8px}.daytag{color:var(--gold);font-size:12px;font-weight:700}footer{text-align:center;padding:12px 20px 35px;color:var(--muted);font-size:12px}@media(max-width:450px){.metrics{grid-template-columns:repeat(3,minmax(0,1fr))}.metric strong{font-size:19px}.grid{grid-template-columns:1fr}header{padding-top:18px}}
+.exercise-options{display:grid;gap:8px;margin:14px 0}.exercise-option{text-align:left;display:flex;align-items:center;gap:10px;width:100%;background:#101b29}.exercise-option[aria-pressed="true"]{border-color:var(--accent);background:#18352f}.exercise-number{display:grid;place-items:center;flex-shrink:0;width:28px;height:28px;border-radius:9px;background:#293c4b;color:var(--accent);font-weight:700}.exercise-option span:last-child{min-width:0}.exercise-option small{display:block;margin-top:3px}.exercise-visual{padding:15px;border:1px solid var(--line);border-radius:15px;background:linear-gradient(145deg,#102831,#111b2a);margin-top:16px}.exercise-visual h3{margin:5px 0 8px}.exercise-visual svg{display:block;width:100%;height:auto;max-height:340px}.exercise-visual .visual-meta{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;font-size:12px;color:var(--accent)}.exercise-visual figcaption{font-size:13px;line-height:1.6;color:var(--muted);margin-top:8px}.exercise-visual figure{margin:12px 0}.visual-controls{display:flex;justify-content:space-between;align-items:center;gap:8px}.visual-controls button{padding:9px 12px}.visual-controls button:disabled{opacity:.4;cursor:default}.visual-controls span{font-size:12px;color:var(--muted)}.exercise-option:focus-visible,.visual-controls button:focus-visible{outline:3px solid var(--gold);outline-offset:3px}@media(max-width:450px){.exercise-visual{padding:10px}.visual-controls button{font-size:13px}.exercise-option{padding:10px}}
+
 </style></head><body><header><div class="wrap"><div class="eyebrow">PROYECTO 90 DÍAS</div><h1>Mi transformación <span style="color:var(--accent)">✦</span></h1><div class="muted">Fuerza · Nutrición · Salud sexual · Bienestar</div><div class="row" style="margin-top:14px"><span id="dateCaption"></span><span class="pill" id="dayBadge">Día 1 / 90</span></div><div class="progress"><div id="overallBar"></div></div></div></header>
 <div class="nav wrap" id="nav"></div><main class="wrap">
 <section class="page" id="agenda">
@@ -66,7 +68,149 @@ document.getElementById("nav").innerHTML=names.map(([id,n])=>`<button data-tab="
 function selected(id){return document.getElementById(id).value}
 function validDate(s){return /^\d{4}-\d{2}-\d{2}$/.test(s)&&!Number.isNaN(dateNum(s))}
 function init(){document.getElementById("targetFace").src=FACE_TARGET;document.getElementById("faceDate").value=today();openFaceDB().then(renderFaces).catch(()=>{document.getElementById("faceHistory").textContent="No se pudo abrir el almacenamiento de fotos en este navegador."});for(let id of ["workDate","foodDate","sexDate","measureDate"])document.getElementById(id).value=today();document.getElementById("startDate").value=data.start;document.getElementById("planDate").value=today();document.getElementById("routineSelect").innerHTML=routines.map((r,i)=>`<option value="${i}">${esc(r.name)}</option>`).join("");document.getElementById("routineSelect").onchange=renderExercises;document.getElementById("foodDate").onchange=render;renderExercises();tab("agenda")}
-function renderExercises(){let r=routines[Number(selected("routineSelect"))];document.getElementById("exerciseList").innerHTML=`<h3>${esc(r.name)}</h3>`+r.ex.map(e=>`<div class="task">✓ <span>${esc(e)}</span></div>`).join("")}
+// Illustrations are embedded SVG: no image server or extra assets are required.
+// Each entry matches an exercise name in the existing routines.
+const exerciseVisuals = {
+  "Press de banca": {group:"Pecho", scene:"bench", poses:["benchLow","benchHigh"], labels:["Barra cerca del pecho","Brazos extendidos"], equipment:"bar", caption:"Vista lateral del press de banca con barra.", arrow:[80,84,80,44]},
+  "Press inclinado": {group:"Pecho superior", scene:"incline", poses:["inclineLow","inclineHigh"], labels:["Mancuernas junto al pecho","Empuje hacia arriba"], equipment:"dumbbells", caption:"Press con mancuernas sobre banco inclinado.", arrow:[79,76,79,31]},
+  "Press militar": {group:"Hombros", scene:"floor", poses:["pressLow","pressHigh"], labels:["A la altura de hombros","Por encima de la cabeza"], equipment:"bar", caption:"Vista frontal del press de hombros de pie.", arrow:[145,61,145,23]},
+  "Elevaciones laterales": {group:"Hombro lateral", scene:"floor", poses:["armsDown","armsWide"], labels:["Brazos junto al cuerpo","Elevación a los lados"], equipment:"dumbbells", caption:"Vista frontal de la elevación lateral con mancuernas.", arrow:[139,116,160,66]},
+  "Tríceps": {group:"Tríceps", scene:"pushdown", poses:["tricepsLow","tricepsHigh"], labels:["Codos flexionados","Extensión hacia abajo"], equipment:"cable", caption:"Extensión de tríceps en polea alta; ilustración de la variante en polea.", arrow:[133,83,133,118]},
+  "Jalón al pecho": {group:"Espalda", scene:"pulldown", poses:["pullHigh","pullLow"], labels:["Brazos arriba","Barra frente al pecho"], equipment:"bar", caption:"Jalón en polea alta, con la barra por delante del cuerpo.", arrow:[145,30,145,79]},
+  "Remo mancuerna": {group:"Espalda", scene:"rowBench", poses:["rowLow","rowHigh"], labels:["Brazo extendido","Mancuerna hacia la cadera"], equipment:"oneDumbbell", caption:"Vista lateral del remo a una mano con apoyo en banco.", arrow:[148,127,148,86]},
+  "Face pull": {group:"Hombro posterior y espalda", scene:"faceCable", poses:["faceFar","faceNear"], labels:["Brazos hacia la polea","Manos junto al rostro"], equipment:"rope", caption:"Vista lateral del tirón de cuerda hacia el rostro.", arrow:[137,66,103,66]},
+  "Curl bíceps": {group:"Bíceps", scene:"floor", poses:["armsDown","curlHigh"], labels:["Brazos extendidos","Flexión de codos"], equipment:"dumbbells", caption:"Vista frontal del curl de bíceps con mancuernas.", arrow:[138,115,138,78]},
+  "Plancha": {group:"Abdomen", scene:"mat", poses:["plankSet","plank"], labels:["Apoyo de antebrazos","Mantén la posición"], equipment:"none", caption:"Plancha sobre antebrazos, con el cuerpo alineado. La segunda figura muestra la posición mantenida."},
+  "Dead bug": {group:"Abdomen", scene:"mat", poses:["deadSet","deadReach"], labels:["Brazos y piernas elevados","Extensión de lado contrario"], equipment:"none", caption:"Vista lateral: extensión de un brazo y la pierna contraria, alternando lados.", arrow:[127,84,153,131]},
+  "Sentadilla": {group:"Piernas y glúteos", scene:"floor", poses:["squatHigh","squatLow"], labels:["De pie","Descenso en sentadilla"], equipment:"backBar", caption:"Vista lateral de la sentadilla con barra.", arrow:[143,81,143,121]},
+  "Peso muerto rumano": {group:"Isquiotibiales y glúteos", scene:"floor", poses:["hingeHigh","hingeLow"], labels:["De pie con la barra","Cadera hacia atrás"], equipment:"bar", caption:"Vista lateral de la bisagra de cadera con barra.", arrow:[142,109,142,144]},
+  "Zancadas": {group:"Piernas y glúteos", scene:"floor", poses:["lungeHigh","lungeLow"], labels:["Posición dividida","Descenso de la rodilla"], equipment:"none", caption:"Vista lateral de la zancada. Repite el movimiento con la otra pierna.", arrow:[145,83,145,122]},
+  "Hip thrust": {group:"Glúteos", scene:"hipBench", poses:["hipLow","hipHigh"], labels:["Cadera abajo","Cadera elevada"], equipment:"hipBar", caption:"Vista lateral, con la parte alta de la espalda apoyada en el banco.", arrow:[116,136,116,105]},
+  "Pantorrillas": {group:"Pantorrillas", scene:"step", poses:["calfLow","calfHigh"], labels:["Talones abajo","Elevación de talones"], equipment:"none", caption:"Vista lateral de la elevación de talones de pie.", arrow:[128,162,128,146]},
+  "Remo sentado": {group:"Espalda", scene:"seatedRow", poses:["seatFar","seatNear"], labels:["Brazos extendidos","Agarre hacia el abdomen"], equipment:"rowCable", caption:"Vista lateral del remo sentado en polea.", arrow:[139,98,111,98]},
+  "Pájaros": {group:"Hombro posterior", scene:"floor", poses:["rearLow","rearHigh"], labels:["Brazos hacia abajo","Apertura de brazos"], equipment:"dumbbells", caption:"Vista frontal con el torso inclinado: apertura de brazos con mancuernas.", arrow:[139,125,158,81]},
+  "Curl martillo": {group:"Bíceps y antebrazo", scene:"floor", poses:["armsDown","curlHigh"], labels:["Agarre neutro","Flexión de codos"], equipment:"hammer", caption:"Mancuernas en posición vertical, con las palmas enfrentadas durante el curl.", arrow:[138,115,138,78]},
+  "Caminar rápido, trotar suave o bicicleta": {group:"Cardio", scene:"floor", poses:["walkA","walkB"], labels:["Paso derecho","Paso izquierdo"], equipment:"none", caption:"Ejemplo visual de caminata, una de las opciones de cardio de esta rutina."},
+  "Ritmo que permita hablar; movilidad al terminar": {group:"Movilidad", scene:"floor", poses:["mobilityA","mobilityB"], labels:["Alcance hacia arriba","Alcance lateral"], equipment:"none", caption:"Ejemplo de movilidad de hombros y tronco al terminar el cardio."}
+};
+
+// Pose coordinates: head, shoulders, hips, elbows, hands, knees and feet.
+const visualPoses = {
+  benchLow:[[38,98],[55,108],[113,108],[69,82],[86,96],[139,119],[139,164]],
+  benchHigh:[[38,98],[55,108],[113,108],[65,72],[71,40],[139,119],[139,164]],
+  inclineLow:[[58,56],[72,76],[110,120],[89,64],[76,49],[137,133],[141,164]],
+  inclineHigh:[[58,56],[72,76],[110,120],[76,48],[80,22],[137,133],[141,164]],
+  pressLow:[[90,32],[[77,54],[103,54]],[90,107],[[62,74],[118,74]],[[65,48],[115,48]],[[77,138],[103,138]],[[72,168],[108,168]]],
+  pressHigh:[[90,32],[[77,54],[103,54]],[90,107],[[72,32],[108,32]],[[77,15],[103,15]],[[77,138],[103,138]],[[72,168],[108,168]]],
+  armsDown:[[90,32],[[77,54],[103,54]],[90,107],[[69,86],[111,86]],[[65,114],[115,114]],[[77,138],[103,138]],[[72,168],[108,168]]],
+  armsWide:[[90,32],[[77,54],[103,54]],[90,107],[[51,60],[129,60]],[[26,68],[154,68]],[[77,138],[103,138]],[[72,168],[108,168]]],
+  tricepsLow:[[80,32],[80,55],[77,110],[85,82],[115,77],[78,137],[85,168]],
+  tricepsHigh:[[80,32],[80,55],[77,110],[85,82],[88,119],[78,137],[85,168]],
+  pullHigh:[[90,46],[[78,66],[102,66]],[90,120],[[66,39],[114,39]],[[59,20],[121,20]],[[65,133],[115,133]],[[63,166],[117,166]]],
+  pullLow:[[90,46],[[78,66],[102,66]],[90,120],[[59,95],[121,95]],[[62,74],[118,74]],[[65,133],[115,133]],[[63,166],[117,166]]],
+  rowLow:[[47,59],[[66,74],[72,75]],[116,89],[[69,98],[95,110]],[[68,122],[96,143]],[[112,126],[137,129]],[[98,151],[144,167]]],
+  rowHigh:[[47,59],[[66,74],[72,75]],[116,89],[[69,98],[112,67]],[[68,122],[107,92]],[[112,126],[137,129]],[[98,151],[144,167]]],
+  faceFar:[[75,35],[75,58],[75,110],[107,60],[139,62],[74,140],[82,168]],
+  faceNear:[[75,35],[75,58],[75,110],[102,86],[86,48],[74,140],[82,168]],
+  curlHigh:[[90,32],[[77,54],[103,54]],[90,107],[[68,87],[112,87]],[[72,65],[108,65]],[[77,138],[103,138]],[[72,168],[108,168]]],
+  plankSet:[[38,100],[53,117],[94,129],[49,151],[28,151],[112,151],[145,151]],
+  plank:[[38,100],[53,117],[94,129],[49,151],[28,151],[119,143],[148,157]],
+  deadSet:[[30,141],[49,145],[100,145],[51,115],[53,86],[115,110],[145,110]],
+  deadReach:[[30,141],[49,145],[100,145],[[28,134],[51,115]],[[12,123],[53,86]],[[115,110],[128,147]],[[145,110],[159,155]]],
+  squatHigh:[[83,32],[83,55],[79,106],[104,67],[103,49],[85,139],[89,168]],
+  squatLow:[[105,65],[102,87],[65,123],[122,92],[123,74],[108,130],[89,168]],
+  hingeHigh:[[85,32],[85,55],[83,106],[92,85],[95,113],[85,139],[90,168]],
+  hingeLow:[[128,82],[111,98],[66,114],[112,119],[112,144],[85,139],[90,168]],
+  lungeHigh:[[86,32],[86,55],[83,106],[100,83],[98,110],[[106,136],[60,135]],[[128,168],[44,168]]],
+  lungeLow:[[91,60],[91,83],[88,125],[105,110],[102,134],[[122,130],[72,160]],[[128,168],[44,168]]],
+  hipLow:[[36,83],[50,102],[99,142],[64,117],[88,139],[130,119],[144,166]],
+  hipHigh:[[36,83],[50,102],[100,103],[64,106],[93,104],[136,109],[144,166]],
+  calfLow:[[84,32],[84,55],[82,106],[94,84],[96,112],[84,139],[88,164]],
+  calfHigh:[[84,20],[84,43],[82,94],[94,72],[96,100],[84,127],[96,154]],
+  seatFar:[[65,44],[65,67],[62,120],[102,85],[138,98],[108,128],[142,154]],
+  seatNear:[[65,44],[65,67],[62,120],[44,99],[84,104],[108,128],[142,154]],
+  rearLow:[[90,54],[[77,73],[103,73]],[90,110],[[72,104],[108,104]],[[70,129],[110,129]],[[73,139],[107,139]],[[68,168],[112,168]]],
+  rearHigh:[[90,54],[[77,73],[103,73]],[90,110],[[50,78],[130,78]],[[26,84],[154,84]],[[73,139],[107,139]],[[68,168],[112,168]]],
+  walkA:[[85,32],[85,55],[82,106],[[66,77],[107,76]],[[48,65],[121,96]],[[63,131],[110,136]],[[43,163],[126,163]]],
+  walkB:[[92,32],[92,55],[89,106],[[113,77],[73,76]],[[131,65],[59,96]],[[112,131],[61,136]],[[132,163],[45,163]]],
+  mobilityA:[[90,32],[[77,54],[103,54]],[90,107],[[66,30],[114,30]],[[78,13],[102,13]],[[77,138],[103,138]],[[72,168],[108,168]]],
+  mobilityB:[[113,37],[[99,55],[118,61]],[90,107],[[79,30],[126,88]],[[55,22],[126,117]],[[77,138],[103,138]],[[72,168],[108,168]]]
+};
+function visualLine(a,b,color="#758c9d",width=5){return `<line x1="${a[0]}" y1="${a[1]}" x2="${b[0]}" y2="${b[1]}" stroke="${color}" stroke-width="${width}" stroke-linecap="round"/>`}
+function visualPair(p){return Array.isArray(p[0])?p:[p,p]}
+function visualEquipment(kind,pose){
+  const hands=visualPair(pose[4]);
+  const weight=p=>`<g stroke="#edf4fb" stroke-width="3">${visualLine([p[0]-9,p[1]],[p[0]+9,p[1]],"#c6d5e3",3)}<path d="M${p[0]-9} ${p[1]-6}v12m18-12v12"/></g>`;
+  if(kind==="dumbbells")return hands.map(weight).join("");
+  if(kind==="oneDumbbell")return weight(hands[1]);
+  if(kind==="hammer")return hands.map(p=>`<g transform="rotate(90 ${p[0]} ${p[1]})">${weight(p)}</g>`).join("");
+  if(kind==="bar"||kind==="backBar"||kind==="hipBar"){
+    const p=kind==="backBar"?visualPair(pose[1])[0]:kind==="hipBar"?pose[2]:hands[0];
+    const half=hands[0][0]!==hands[1][0]&&kind==="bar"?Math.abs(hands[1][0]-hands[0][0])/2+14:23;
+    const cx=hands[0][0]!==hands[1][0]&&kind==="bar"?(hands[0][0]+hands[1][0])/2:p[0];
+    return visualLine([cx-half,p[1]],[cx+half,p[1]],"#e6edf4",4)+`<path d="M${cx-half+3} ${p[1]-8}v16m${2*half-6}-16v16" stroke="#a7b9ca" stroke-width="6" stroke-linecap="round"/>`;
+  }
+  if(kind==="cable")return visualLine([133,16],hands[0],"#a7b9ca",2)+weight(hands[0]);
+  if(kind==="rope")return visualLine([168,48],hands[0],"#a7b9ca",2)+visualLine(hands[0],[hands[0][0],hands[0][1]+12],"#f3c979",4);
+  if(kind==="rowCable")return visualLine([169,113],hands[0],"#a7b9ca",2)+weight(hands[0]);
+  return "";
+}
+function visualScene(scene){
+  let s=visualLine([14,174],[168,174],"#334c5a",2);
+  if(["bench","rowBench","hipBench","pulldown","seatedRow"].includes(scene)){
+    const a=scene==="bench"?[31,120]:scene==="rowBench"?[48,126]:scene==="hipBench"?[16,108]:scene==="pulldown"?[68,125]:[39,125];
+    const b=scene==="bench"?[120,120]:scene==="rowBench"?[121,126]:scene==="hipBench"?[59,108]:scene==="pulldown"?[112,125]:[83,125];
+    s+=visualLine(a,b,"#718799",8)+visualLine(a,[a[0],170])+visualLine(b,[b[0],170]);
+  }
+  if(scene==="incline")s+=visualLine([44,69],[111,132],"#718799",8)+visualLine([111,132],[145,132],"#718799",8)+visualLine([77,100],[77,170])+visualLine([132,134],[132,170]);
+  if(scene==="pushdown")s+=visualLine([153,15],[153,171])+visualLine([127,15],[153,15]);
+  if(scene==="pulldown")s+=visualLine([161,12],[161,171])+visualLine([48,12],[161,12])+visualLine([90,12],[90,23],"#a7b9ca",2);
+  if(scene==="faceCable"||scene==="seatedRow")s+=visualLine([169,18],[169,171]);
+  if(scene==="mat")s+=`<rect x="12" y="158" width="152" height="8" rx="4" fill="#355e64"/>`;
+  if(scene==="step")s+=`<path d="M90 173v-12h30v12" fill="#3a5665" stroke="#718799" stroke-width="2"/>`;
+  return s;
+}
+function visualFigure(pose){
+  const [head,shoulders,hip,elbows,hands,knees,feet]=pose;
+  const ss=visualPair(shoulders),ee=visualPair(elbows),hh=visualPair(hands),kk=visualPair(knees),ff=visualPair(feet);
+  const neck=[(ss[0][0]+ss[1][0])/2,(ss[0][1]+ss[1][1])/2];
+  let s=visualLine(neck,hip,"#58ddb2",13)+visualLine(ss[0],ss[1],"#58ddb2",9);
+  for(let i=0;i<2;i++)s+=visualLine(hip,kk[i],i?"#7ba9b2":"#b5ced6",8)+visualLine(kk[i],ff[i],i?"#7ba9b2":"#b5ced6",7)+visualLine(ff[i],[ff[i][0]+9,ff[i][1]],"#edf4fb",5);
+  for(let i=0;i<2;i++)s+=visualLine(ss[i],ee[i],i?"#e9ad68":"#f3c979",7)+visualLine(ee[i],hh[i],i?"#e9ad68":"#f3c979",6);
+  s+=visualLine(neck,head,"#b5ced6",7)+`<circle cx="${head[0]}" cy="${head[1]}" r="10" fill="#c7d9e2"/>`;
+  return s;
+}
+function exerciseDiagram(name,v){
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 235" role="img" aria-label="${esc(name+': '+v.labels.join(' y '))}"><title>${esc(name)}</title><desc>${esc(v.caption)}</desc>${v.poses.map((p,i)=>`<g transform="translate(${i*200+10} 8)">${visualScene(v.scene)}${visualFigure(visualPoses[p])}${visualEquipment(v.equipment,visualPoses[p])}${i===0&&v.arrow?visualArrow(v.arrow):""}<text x="90" y="199" text-anchor="middle" fill="#a7b9ca" font-size="10" font-family="system-ui">${i+1}. ${esc(v.labels[i])}</text></g>`).join("")}<line x1="200" y1="20" x2="200" y2="183" stroke="#2b4653" stroke-dasharray="4 6"/></svg>`;
+}
+function visualArrow(a){
+  const [x,y,xx,yy]=a,angle=Math.atan2(yy-y,xx-x),size=6;
+  return visualLine([x,y],[xx,yy],"#58ddb2",2)+`<path d="M${xx-size*Math.cos(angle-.5)} ${yy-size*Math.sin(angle-.5)}L${xx} ${yy}L${xx-size*Math.cos(angle+.5)} ${yy-size*Math.sin(angle+.5)}" fill="none" stroke="#58ddb2" stroke-width="2"/>`;
+}
+let activeExerciseIndex=0;
+function exerciseName(text){return text.split(' — ')[0]}
+function renderExercises(){
+  const routine=routines[Number(selected("routineSelect"))]||routines[0];
+  activeExerciseIndex=0;
+  document.getElementById("exerciseList").innerHTML=`<h3>${esc(routine.name)}</h3><p class="note">Selecciona un ejercicio para ver su guía visual.</p><div class="exercise-options">${routine.ex.map((text,i)=>{const parts=text.split(' — ');return `<button type="button" class="exercise-option" data-exercise="${i}" aria-controls="exerciseVisual" aria-pressed="${i===0}" onclick="showExerciseVisual(${i})"><span class="exercise-number">${i+1}</span><span><b>${esc(parts[0])}</b>${parts[1]?`<small>${esc(parts.slice(1).join(' — '))}</small>`:""}</span></button>`}).join("")}</div><div id="exerciseVisual" class="exercise-visual" role="region" aria-label="Guía visual del ejercicio" aria-live="polite" aria-atomic="true"></div>`;
+  showExerciseVisual(0);
+}
+function showExerciseVisual(index){
+  const routine=routines[Number(selected("routineSelect"))]||routines[0];
+  if(!Number.isInteger(index)||index<0||index>=routine.ex.length)return;
+  activeExerciseIndex=index;
+  const text=routine.ex[index],name=exerciseName(text),v=exerciseVisuals[name];
+  const box=document.getElementById("exerciseVisual");
+  document.querySelectorAll('.exercise-option').forEach((button,i)=>button.setAttribute('aria-pressed',String(i===index)));
+  box.innerHTML=`<div class="visual-meta"><span>GUÍA VISUAL</span><span>${esc(v?.group||"Entrenamiento")}</span></div><h3>${esc(name)}</h3><div class="note">${esc(text.includes(' — ')?text.split(' — ').slice(1).join(' — '):routine.name)}</div>${v?`<figure>${exerciseDiagram(name,v)}<figcaption>${esc(v.caption)} Ilustración esquemática de la opción de gimnasio.</figcaption></figure>`:'<p class="note">Guía visual no disponible para este ejercicio.</p>'}<div class="visual-controls"><button type="button" ${index===0?'disabled':''} onclick="stepExerciseVisual(-1)">← Anterior</button><span>${index+1} de ${routine.ex.length}</span><button type="button" ${index===routine.ex.length-1?'disabled':''} onclick="stepExerciseVisual(1)">Siguiente →</button></div>`;
+}
+function stepExerciseVisual(step){
+  showExerciseVisual(activeExerciseIndex+step);
+  // The controls are recreated after each change. Restore keyboard focus.
+  const buttons=document.querySelectorAll('.visual-controls button');
+  const target=step>0?buttons[1]:buttons[0];
+  (target?.disabled?(step>0?buttons[0]:buttons[1]):target)?.focus({preventScroll:true});
+}
 function render(){if(document.getElementById("rostro").classList.contains("active"))renderFaces();let d=daysSince(data.start),progress=Math.min(100,Math.max(0,d/90*100));document.getElementById("dayBadge").textContent=d<1?"Aún no inicia":`Día ${Math.min(d,90)} / 90`;document.getElementById("overallBar").style.width=progress+"%";document.getElementById("dateCaption").textContent=new Date().toLocaleDateString("es-CO",{weekday:"long",day:"numeric",month:"long"});
 let t=today(),foods=data.foods.filter(x=>x.date===t),tot=foods.reduce((a,x)=>({cal:a.cal+x.cal,pro:a.pro+x.pro,carb:a.carb+x.carb,fat:a.fat+x.fat}),{cal:0,pro:0,carb:0,fat:0});
 document.getElementById("calMetric").textContent=Math.round(tot.cal);document.getElementById("proMetric").textContent=Math.round(tot.pro)+" g";
